@@ -10,13 +10,13 @@ const rateLimiter = require("./config/rateLimiter");
 const helmetConfig = require("./config/helmetConfig");
 const connectDB = require("./config/database");
 
-
 dotenv.config();
 // database connection to db
 connectDB();
 const app = express();
 
 const PORT = process.env.PORT || 5000;
+const VERSION = process.env.VERSION || "/api/v1";
 
 /**
  * Middleware
@@ -29,9 +29,6 @@ app.use(rid());
 app.use(rateLimiter);
 helmetConfig.forEach((middleware) => app.use(middleware));
 
-/**
- * Routes
- */
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
@@ -45,8 +42,11 @@ app.use((err, req, res, next) => {
 });
 
 /**
- * Start Server
+ * routing for api
  */
+const authRoutes = require("./router");
+app.use(VERSION, authRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
