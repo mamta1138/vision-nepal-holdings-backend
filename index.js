@@ -8,8 +8,12 @@ const corsOptions = require("./config/corsOptions");
 
 const rateLimiter = require("./config/rateLimiter");
 const helmetConfig = require("./config/helmetConfig");
+const connectDB = require("./config/database");
+
 
 dotenv.config();
+// database connection to db
+connectDB();
 const app = express();
 
 const PORT = process.env.PORT || 5000;
