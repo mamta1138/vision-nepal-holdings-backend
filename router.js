@@ -41,10 +41,6 @@ router.use("/ceo-message", ceoMessageRoutes);
 const companyInfoRoutes = require("./components/company_information/routers/company_info_routes.js");
 router.use("/company-info", companyInfoRoutes);
 
-// jobs Routes
-const jobRoutes = require("./components/jobs_available/routers/job_routes.js");
-router.use("/jobs", jobRoutes);
-
 // Milestone Routes
 const milestoneRoutes = require("./components/milestone/routers/milestone_routes.js");
 router.use("/milestones", milestoneRoutes);
@@ -56,5 +52,9 @@ router.use("/mission-vision", missionVisionRoutes);
 // Report Routes
 const reportRoutes = require("./components/report/routers/report_routes.js");   
 router.use("/reports", reportRoutes);
+
+// Team Routes
+const teamRoutes = require("./components/teams/routers/team_routes.js");
+router.use("/team", teamRoutes);
 
 module.exports = router;
