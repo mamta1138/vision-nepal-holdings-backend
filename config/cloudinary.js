@@ -14,7 +14,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "bajra-blogs",
+    folder: "vision_nepal_holdings",
     allowed_formats: ["jpg", "jpeg", "png", "webp", "pdf", "svg"],
   },
 });
