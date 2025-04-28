@@ -57,4 +57,12 @@ router.use("/reports", reportRoutes);
 const teamRoutes = require("./components/teams/routers/team_routes.js");
 router.use("/team", teamRoutes);
 
+// Gallery Routes
+const galleryRoutes = require("./components/gallery/routers/gallery_routes.js");
+router.use("/gallery", galleryRoutes);
+
+// Partner Routes
+const partnerRoutes = require("./components/partners/routers/partner_routes.js");   
+router.use("/partners", partnerRoutes);
+
 module.exports = router;
