@@ -11,15 +11,15 @@ const createGallery = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
-    const images = req.files?.map(file => file.path);
+    const image = req.file?.path;  
 
-    if (!images || images.length === 0) {
-      return res.status(400).json({ message: "At least one image is required." });
+    if (!image) {
+      return res.status(400).json({ message: "Image is required." });
     }
 
     const newGallery = new Gallery({
       ...value,
-      image: images,  
+      image: image,   
     });
 
     await newGallery.save();

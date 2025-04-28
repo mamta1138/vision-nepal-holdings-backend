@@ -21,10 +21,10 @@ const updateGallery = async (req, res) => {
       updatedData.title = value.title;
     }
 
-    const images = req.files?.map(file => file.path);
+    const image = req.file?.path; 
 
-    if (images && images.length > 0) {
-      updatedData.image = images;
+    if (image) {
+      updatedData.image = image; 
     }
 
     Object.assign(gallery, updatedData);

@@ -11,8 +11,8 @@ const listAllGallery = require("../controllers/list_gallery");
 const getSingleGallery = require("../controllers/get_single_gallery");
 const deleteGallery = require("../controllers/delete_gallery");
 
-router.post("/", verifyToken, checkRole("admin", "editor"), upload.array("image", 10),createGallery);
-router.put("/:id", verifyToken, checkRole("admin", "editor"), upload.array("image", 10), updateGallery);
+router.post("/", verifyToken, checkRole("admin", "editor"), upload.single("image"), createGallery);
+router.put("/:id", verifyToken, checkRole("admin", "editor"), upload.single("image"), updateGallery);
 router.get("/", listAllGallery);
 router.get("/:id", getSingleGallery);
 router.delete("/:id", verifyToken, checkRole("admin", "editor"), deleteGallery);

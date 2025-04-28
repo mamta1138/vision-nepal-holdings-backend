@@ -8,9 +8,9 @@ const gallerySchema = new mongoose.Schema(
       trim: true,
     },
     image: {
-      type: [String], 
+      type: String,
       required: [true, "Image is required"],
-      default: [],
+      trim: true,
     },
     status: {
       type: String,
