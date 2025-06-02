@@ -65,4 +65,8 @@ router.use("/gallery", galleryRoutes);
 const partnerRoutes = require("./components/partners/routers/partner_routes.js");   
 router.use("/partners", partnerRoutes);
 
+// Investor Routes
+const investorRoutes = require("./components/investor/routers/investor_routes.js");   
+router.use("/investors", investorRoutes);
+
 module.exports = router;
