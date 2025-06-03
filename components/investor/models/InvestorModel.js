@@ -57,7 +57,7 @@ const investorSchema = new mongoose.Schema(
       required: [true, "Passport photo is required"],
     },
     verifyingDocuments: {
-      type: String,
+      type: [String],
       required: [true, "Verifying documents are required"],
     },
   },

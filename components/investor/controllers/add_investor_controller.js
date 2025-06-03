@@ -1,5 +1,8 @@
 const Investor = require("../models/InvestorModel");
 const investorValidation = require("../helper/investor_validator");
+const multer = require("multer");
+const { storage } = require("../../../config/cloudinary");
+const upload = multer({ storage });
 
 const addInvestor = async (req, res) => {
   const { error, value } = investorValidation.validate(req.body);
@@ -13,23 +16,42 @@ const addInvestor = async (req, res) => {
     }
 
     // check if investor already exists
-    await Investor.findOne({
+    const existingInvestor = await Investor.findOne({
       email: value.email,
       phone: value.phone,
-    }).then((value) => {
-      if (value) {
-        return res.status(400).json({
-          message: "Investor with this email or phone already exists",
-        });
-      }
     });
+
+    if (existingInvestor) {
+      return res.status(400).json({
+        message: "Investor with this email or phone already exists",
+      });
+    }
+
+    const passportPhoto = req.files?.passportPhoto?.[0]?.path;
+    const verifyingDocuments = req.files?.verifyingDocuments?.map(file => file.path) || [];
+
+    if (!passportPhoto) {
+      return res.status(400).json({
+        message: "Passport photo is required",
+      });
+    }
+
+    if (!verifyingDocuments) {
+      return res.status(400).json({
+        message: "Verifying document is required",
+      });
+    }
 
     // create new investor
     let newInvestor = new Investor({
       ...value,
       status: value.status || "pending",
+      passportPhoto,
+      verifyingDocuments,
     });
-
+    
+    await newInvestor.save(); 
+    
     return res.status(201).json({
       message: "success",
       item: newInvestor,
@@ -40,4 +62,4 @@ const addInvestor = async (req, res) => {
   }
 };
 
-module.exports = addInvestor;
+module.exports = {addInvestor, upload};
