@@ -24,6 +24,8 @@ router.post(
 );
 router.put(
   "/:id",
+  verifyToken,
+  checkRole("admin", "editor"),
     upload.fields([
     { name: "passportPhoto", maxCount: 1 },
     { name: "verifyingDocuments", maxCount: 5 }
