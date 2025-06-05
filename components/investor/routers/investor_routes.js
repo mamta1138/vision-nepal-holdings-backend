@@ -14,8 +14,6 @@ const deleteInvestor = require("../controllers/delete_investor_controller");
 
 router.post(
   "/",
-  verifyToken, 
-  checkRole("admin", "editor"),
     upload.fields([
     { name: "passportPhoto", maxCount: 1 },
     { name: "verifyingDocuments", maxCount: 5 }
