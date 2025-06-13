@@ -7,24 +7,28 @@ const listAllInvestors = async (req, res) => {
   let sort = req.query.sort || "createdAt";
   let order = req.query.order === "asc" ? 1 : -1;
   let search = req.query.search || "";
+  let status = req.query.status;
+
   try {
-    let items = await Investor.find({
+    let query = {
       $or: [
         { fullname: { $regex: search, $options: "i" } },
         { email: { $regex: search, $options: "i" } },
         { phone: { $regex: search, $options: "i" } },
       ],
-    })
+    };
+
+    if (status) {
+      query.status = status;
+    }
+
+    let items = await Investor.find(query)
       .sort({ [sort]: order })
       .skip(skip)
       .limit(limit);
-    let total = await Investor.countDocuments({
-      $or: [
-        { fullname: { $regex: search, $options: "i" } },
-        { email: { $regex: search, $options: "i" } },
-        { phone: { $regex: search, $options: "i" } },
-      ],
-    });
+
+    let total = await Investor.countDocuments(query);
+
     return res.status(200).json({
       status: "success",
       items,

@@ -36,16 +36,16 @@ const addInvestor = async (req, res) => {
       });
     }
 
-    if (!verifyingDocuments) {
+    if (!verifyingDocuments || verifyingDocuments.length === 0) {
       return res.status(400).json({
-        message: "Verifying document is required",
+        message: "At least one verifying document is required",
       });
     }
 
     // create new investor
     let newInvestor = new Investor({
       ...value,
-      status: value.status || "pending",
+      status: "pending",
       passportPhoto,
       verifyingDocuments,
     });

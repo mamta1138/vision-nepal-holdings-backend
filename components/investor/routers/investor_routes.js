@@ -23,15 +23,15 @@ router.post(
 router.put(
   "/:id",
   verifyToken,
-  checkRole("admin", "editor"),
+  checkRole("admin",),
     upload.fields([
     { name: "passportPhoto", maxCount: 1 },
     { name: "verifyingDocuments", maxCount: 5 }
   ]),  
   updateInvestor
 );
-router.get("/", listAllInvestors);
-router.get("/:id", listInvestor);
-router.delete("/:id", verifyToken, checkRole("admin", "editor"), deleteInvestor);
+router.get("/", verifyToken, checkRole("admin", "editor"), listAllInvestors);
+router.get("/:id", verifyToken, checkRole("admin", "editor"), listInvestor);
+router.delete("/:id", verifyToken, checkRole("admin"), deleteInvestor);
 
 module.exports = router;

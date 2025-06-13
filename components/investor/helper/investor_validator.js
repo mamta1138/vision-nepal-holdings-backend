@@ -14,10 +14,10 @@ const investorValidation = Joi.object({
     "string.empty": "Phone no. is required",
   }),
   status: Joi.string()
-    .valid("pending", "approved")
+    .valid("pending", "approved", "rejected")
     .default("pending")
     .messages({
-      "string.valid": "Status must be either 'pending' or 'approved'",
+      "string.valid": "Status must be either 'pending', 'approved' or 'rejected'",
     }),
   address: Joi.object({
     street: Joi.string().required().messages({
