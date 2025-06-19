@@ -12,9 +12,9 @@ const listAllInvestors = async (req, res) => {
   try {
     let query = {
       $or: [
-        { fullname: { $regex: search, $options: "i" } },
+        { fullName: { $regex: search, $options: "i" } },
         { email: { $regex: search, $options: "i" } },
-        { phone: { $regex: search, $options: "i" } },
+        { phoneNumber: { $regex: search, $options: "i" } },
       ],
     };
 

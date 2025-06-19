@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Investor = require("../models/InvestorModel");
 
 const updateInvestor = async (req, res) => {
@@ -5,7 +6,12 @@ const updateInvestor = async (req, res) => {
   const { status } = req.body;
 
   try {
-    if (!status || !["pending", "approved", "rejected"].includes(status)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid investor ID format" });
+    }
+
+    const validStatuses = ["pending", "approved", "rejected"];
+    if (!status || !validStatuses.includes(status)) {
       return res.status(400).json({
         message: "Invalid or missing status value. Must be 'pending', 'approved', or 'rejected'.",
       });
@@ -13,14 +19,15 @@ const updateInvestor = async (req, res) => {
 
     const existingInvestor = await Investor.findById(id);
     if (!existingInvestor) {
-      return res.status(404).json({
-        message: "Investor not found",
-      });
+      return res.status(404).json({ message: "Investor not found" });
     }
 
     const updatedInvestor = await Investor.findByIdAndUpdate(
       id,
-      { status },
+      {
+        status,
+        updatedBy: req.user?.id || null, 
+      },
       { new: true, runValidators: true }
     );
 

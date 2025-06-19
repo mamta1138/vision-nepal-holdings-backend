@@ -11,6 +11,8 @@ const {
   listInvestor,
 } = require("../controllers/list_all_investor");
 const deleteInvestor = require("../controllers/delete_investor_controller");
+const editInvestor = require("../controllers/edit_investor");
+
 
 router.post(
   "/",
@@ -33,5 +35,15 @@ router.put(
 router.get("/", verifyToken, checkRole("admin", "editor"), listAllInvestors);
 router.get("/:id", verifyToken, checkRole("admin", "editor"), listInvestor);
 router.delete("/:id", verifyToken, checkRole("admin"), deleteInvestor);
+router.put(
+  "/edit/:id",
+  verifyToken,
+  checkRole("admin"),
+  upload.fields([
+    { name: "passportPhoto", maxCount: 1 },
+    { name: "verifyingDocuments", maxCount: 5 }
+  ]),
+  editInvestor
+);
 
 module.exports = router;

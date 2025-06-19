@@ -4,13 +4,12 @@ const deleteInvestor = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Check if the investor exists
+
     const investor = await Investor.findById(id);
     if (!investor) {
       return res.status(404).json({ message: "Investor not found" });
     }
 
-    // Delete the investor
     await Investor.findByIdAndDelete(id);
 
     return res.status(200).json({ message: "Investor deleted successfully" });
