@@ -69,7 +69,7 @@ router.use("/partners", partnerRoutes);
 const investorRoutes = require("./components/investor/routers/investor_routes.js");   
 router.use("/investors", investorRoutes);
 
-// Popup Routes
+//Popup Routes
 const popupRoutes = require("./components/popup/routers/popup_routes.js");
 router.use("/popup", popupRoutes);
 
