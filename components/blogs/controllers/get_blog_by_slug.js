@@ -4,15 +4,28 @@ const getBlogBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
 
-    const blog = await Blog.findOne({ slug });
+    const blog = await Blog.findOne({ slug })
+      .populate("categories", "name slug _id") 
+      .populate("tags", "name slug");
+
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    return res.status(200).json({ blog });
+    const recommendations = await Blog.find({
+      _id: { $ne: blog._id },
+      categories: blog.categories._id
+    })
+      .populate("categories", "name slug")
+      .populate("tags", "name slug")
+      .limit(3);
+
+    return res.status(200).json({ blog, recommendations });
   } catch (error) {
     console.error("Get Blog by Slug Error:", error);
-    return res.status(500).json({ message: "Error fetching blog" });
+    return res
+      .status(500)
+      .json({ message: "Error fetching blog and recommendations" });
   }
 };
 
